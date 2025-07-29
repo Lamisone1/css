@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анализ текста - CYBER SEO Tools</title>
+    <meta name="description" content="Полный анализ текста: подсчет символов, слов, предложений, частота слов, анализ читаемости и SEO-метрики.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-container"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">
+                📝 <span class="text-neon">Анализ</span> <span class="text-pink">текста</span>
+            </h1>
+            <p class="page-description">
+                Полный анализ текста: подсчет символов, слов, предложений, частота слов, анализ читаемости и SEO-метрики.
+            </p>
+        </div>
+
+        <div class="tool-container">
+            <!-- Input Section -->
+            <div class="input-section">
+                <div class="form-group">
+                    <label class="form-label">Введите текст для анализа</label>
+                    <textarea 
+                        id="textInput" 
+                        class="form-textarea" 
+                        placeholder="Вставьте ваш текст сюда для анализа..."
+                        rows="12"
+                    ></textarea>
+                </div>
+                
+                <div class="controls">
+                    <button id="analyzeBtn" class="btn btn-primary">📊 Анализировать текст</button>
+                    <button id="clearBtn" class="btn btn-secondary">🗑️ Очистить</button>
+                    <button id="loadSample" class="btn btn-secondary">📄 Загрузить пример</button>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <!-- Basic Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon text-neon">📏</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="charCount">0</div>
+                            <div class="stat-label">Символов</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon text-pink">📏</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="charNoSpaces">0</div>
+                            <div class="stat-label">Без пробелов</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon text-green">📝</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="wordCount">0</div>
+                            <div class="stat-label">Слов</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon text-neon">📄</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="sentenceCount">0</div>
+                            <div class="stat-label">Предложений</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon text-pink">📑</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="paragraphCount">0</div>
+                            <div class="stat-label">Абзацев</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon text-green">⚡</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="avgWordsPerSentence">0</div>
+                            <div class="stat-label">Слов/предложение</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Readability Score -->
+                <div class="readability-section">
+                    <h3 class="section-title text-neon">Читаемость текста</h3>
+                    <div class="readability-card">
+                        <div class="readability-score">
+                            <div class="score-circle">
+                                <span id="readabilityScore">0</span>
+                            </div>
+                            <div class="score-label" id="readabilityLevel">Не определено</div>
+                        </div>
+                        <div class="readability-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Среднее слов в предложении:</span>
+                                <span class="detail-value" id="avgWordsDetail">0</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Средняя длина слова:</span>
+                                <span class="detail-value" id="avgCharsDetail">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Word Frequency -->
+                <div class="frequency-section">
+                    <div class="section-header">
+                        <h3 class="section-title text-pink">Частота слов</h3>
+                        <div class="export-controls">
+                            <button id="exportFrequency" class="btn btn-secondary">📊 Экспорт частотности</button>
+                        </div>
+                    </div>
+                    
+                    <div class="frequency-container" id="frequencyContainer">
+                        <!-- Word frequency will be displayed here -->
+                    </div>
+                </div>
+
+                <!-- Export Section -->
+                <div class="export-section">
+                    <h3 class="section-title text-green">Экспорт результатов</h3>
+                    <div class="export-buttons">
+                        <button id="exportCSV" class="btn btn-primary">📄 Экспорт CSV</button>
+                        <button id="exportExcel" class="btn btn-primary">📊 Экспорт Excel</button>
+                        <button id="copyAnalysis" class="btn btn-secondary">📋 Копировать анализ</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <script src="../js/main.js"></script>
+    <script>
+        class TextAnalyzerPage {
+            constructor() {
+                this.currentAnalysis = null;
+                this.init();
+            }
+
+            init() {
+                this.loadComponents();
+                this.setupEventListeners();
+            }
+
+            loadComponents() {
+                // Load header
+                fetch('../components/header.html')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('header-container').innerHTML = data;
+                    });
+                
+                // Load footer
+                fetch('../components/footer.html')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('footer-container').innerHTML = data;
+                    });
+            }
+
+            setupEventListeners() {
+                document.getElementById('analyzeBtn').addEventListener('click', () => this.analyzeText());
+                document.getElementById('clearBtn').addEventListener('click', () => this.clearText());
+                document.getElementById('loadSample').addEventListener('click', () => this.loadSampleText());
+                document.getElementById('exportCSV').addEventListener('click', () => this.exportCSV());
+                document.getElementById('exportExcel').addEventListener('click', () => this.exportExcel());
+                document.getElementById('exportFrequency').addEventListener('click', () => this.exportFrequency());
+                document.getElementById('copyAnalysis').addEventListener('click', () => this.copyAnalysis());
+
+                // Real-time analysis on input
+                const textInput = document.getElementById('textInput');
+                textInput.addEventListener('input', Utils.debounce(() => {
+                    if (textInput.value.trim().length > 0) {
+                        this.analyzeText();
+                    }
+                }, 500));
+            }
+
+            analyzeText() {
+                const textInput = document.getElementById('textInput');
+                const text = textInput.value.trim();
+
+                if (!text) {
+                    Utils.showNotification('Введите текст для анализа', 'error');
+                    return;
+                }
+
+                this.currentAnalysis = TextAnalyzer.analyze(text);
+                
+                if (!this.currentAnalysis) {
+                    Utils.showNotification('Ошибка при анализе текста', 'error');
+                    return;
+                }
+
+                this.displayResults();
+            }
+
+            displayResults() {
+                const resultsSection = document.getElementById('resultsSection');
+                
+                // Update basic stats
+                document.getElementById('charCount').textContent = Utils.formatNumber(this.currentAnalysis.characters);
+                document.getElementById('charNoSpaces').textContent = Utils.formatNumber(this.currentAnalysis.charactersNoSpaces);
+                document.getElementById('wordCount').textContent = Utils.formatNumber(this.currentAnalysis.words);
+                document.getElementById('sentenceCount').textContent = Utils.formatNumber(this.currentAnalysis.sentences);
+                document.getElementById('paragraphCount').textContent = Utils.formatNumber(this.currentAnalysis.paragraphs);
+                document.getElementById('avgWordsPerSentence').textContent = this.currentAnalysis.avgWordsPerSentence;
+
+                // Update readability
+                const readabilityScore = this.currentAnalysis.readabilityScore;
+                document.getElementById('readabilityScore').textContent = readabilityScore.score;
+                document.getElementById('readabilityLevel').textContent = readabilityScore.level;
+                document.getElementById('avgWordsDetail').textContent = this.currentAnalysis.avgWordsPerSentence;
+                document.getElementById('avgCharsDetail').textContent = this.currentAnalysis.avgCharsPerWord;
+
+                // Update score circle color
+                const scoreCircle = document.querySelector('.score-circle');
+                scoreCircle.className = 'score-circle';
+                if (readabilityScore.score >= 70) {
+                    scoreCircle.classList.add('score-good');
+                } else if (readabilityScore.score >= 50) {
+                    scoreCircle.classList.add('score-medium');
+                } else {
+                    scoreCircle.classList.add('score-poor');
+                }
+
+                // Display word frequency
+                this.displayWordFrequency();
+
+                resultsSection.style.display = 'block';
+                resultsSection.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            displayWordFrequency() {
+                const container = document.getElementById('frequencyContainer');
+                const topWords = this.currentAnalysis.topWords;
+
+                if (topWords.length === 0) {
+                    container.innerHTML = '<p class="no-data">Нет данных для отображения</p>';
+                    return;
+                }
+
+                const maxCount = topWords[0][1];
+                let html = '<div class="frequency-list">';
+
+                topWords.forEach(([word, count], index) => {
+                    const percentage = (count / maxCount) * 100;
+                    html += `
+                        <div class="frequency-item">
+                            <div class="frequency-rank">${index + 1}</div>
+                            <div class="frequency-word">${word}</div>
+                            <div class="frequency-bar">
+                                <div class="frequency-fill" style="width: ${percentage}%"></div>
+                            </div>
+                            <div class="frequency-count">${count}</div>
+                        </div>
+                    `;
+                });
+
+                html += '</div>';
+                container.innerHTML = html;
+            }
+
+            loadSampleText() {
+                const sampleText = `SEO (Search Engine Optimization) — это комплекс мер по внутренней и внешней оптимизации для поднятия позиций сайта в результатах выдачи поисковых систем по определённым запросам пользователей. Обычно, чем выше позиция сайта в результатах поиска, тем больше заинтересованных посетителей переходит на него с поисковых систем.
+
+При этом следует различать два основных направления оптимизации:
+- Оптимизация под алгоритмы поисковых систем (техническая оптимизация)
+- Оптимизация под поведенческие факторы пользователей
+
+Поисковая оптимизация является подразделом поискового маркетинга. От грамотно проведённой SEO-оптимизации зависит посещаемость сайта, а следовательно, прибыль и популярность интернет-ресурса.
+
+Основными задачами SEO являются:
+1. Увеличение видимости сайта в поисковых системах
+2. Привлечение целевого трафика
+3. Повышение конверсии сайта
+4. Улучшение пользовательского опыта
+
+Современное SEO включает в себя множество аспектов: от технической оптимизации и создания качественного контента до работы с социальными сигналами и мобильной оптимизации.`;
+
+                document.getElementById('textInput').value = sampleText;
+                this.analyzeText();
+                Utils.showNotification('Загружен пример текста', 'success');
+            }
+
+            clearText() {
+                document.getElementById('textInput').value = '';
+                document.getElementById('resultsSection').style.display = 'none';
+                this.currentAnalysis = null;
+                Utils.showNotification('Текст очищен', 'success');
+            }
+
+            exportCSV() {
+                if (!this.currentAnalysis) {
+                    Utils.showNotification('Нет данных для экспорта', 'error');
+                    return;
+                }
+
+                const data = [
+                    { metric: 'Символов', value: this.currentAnalysis.characters },
+                    { metric: 'Символов без пробелов', value: this.currentAnalysis.charactersNoSpaces },
+                    { metric: 'Слов', value: this.currentAnalysis.words },
+                    { metric: 'Предложений', value: this.currentAnalysis.sentences },
+                    { metric: 'Абзацев', value: this.currentAnalysis.paragraphs },
+                    { metric: 'Слов в предложении (среднее)', value: this.currentAnalysis.avgWordsPerSentence },
+                    { metric: 'Символов в слове (среднее)', value: this.currentAnalysis.avgCharsPerWord },
+                    { metric: 'Оценка читаемости', value: this.currentAnalysis.readabilityScore.score },
+                    { metric: 'Уровень читаемости', value: this.currentAnalysis.readabilityScore.level }
+                ];
+
+                Utils.exportToCSV(data, 'text-analysis.csv');
+            }
+
+            exportExcel() {
+                if (!this.currentAnalysis) {
+                    Utils.showNotification('Нет данных для экспорта', 'error');
+                    return;
+                }
+
+                const data = [
+                    { metric: 'Символов', value: this.currentAnalysis.characters },
+                    { metric: 'Символов без пробелов', value: this.currentAnalysis.charactersNoSpaces },
+                    { metric: 'Слов', value: this.currentAnalysis.words },
+                    { metric: 'Предложений', value: this.currentAnalysis.sentences },
+                    { metric: 'Абзацев', value: this.currentAnalysis.paragraphs },
+                    { metric: 'Слов в предложении (среднее)', value: this.currentAnalysis.avgWordsPerSentence },
+                    { metric: 'Символов в слове (среднее)', value: this.currentAnalysis.avgCharsPerWord },
+                    { metric: 'Оценка читаемости', value: this.currentAnalysis.readabilityScore.score },
+                    { metric: 'Уровень читаемости', value: this.currentAnalysis.readabilityScore.level }
+                ];
+
+                Utils.exportToExcel(data, 'text-analysis.xlsx');
+            }
+
+            exportFrequency() {
+                if (!this.currentAnalysis || !this.currentAnalysis.topWords.length) {
+                    Utils.showNotification('Нет данных о частотности для экспорта', 'error');
+                    return;
+                }
+
+                const data = this.currentAnalysis.topWords.map(([word, count], index) => ({
+                    rank: index + 1,
+                    word: word,
+                    frequency: count
+                }));
+
+                Utils.exportToCSV(data, 'word-frequency.csv');
+            }
+
+            copyAnalysis() {
+                if (!this.currentAnalysis) {
+                    Utils.showNotification('Нет данных для копирования', 'error');
+                    return;
+                }
+
+                const analysis = this.currentAnalysis;
+                const text = `
+АНАЛИЗ ТЕКСТА
+=============
+
+ОСНОВНЫЕ ПОКАЗАТЕЛИ:
+- Символов: ${Utils.formatNumber(analysis.characters)}
+- Символов без пробелов: ${Utils.formatNumber(analysis.charactersNoSpaces)}
+- Слов: ${Utils.formatNumber(analysis.words)}
+- Предложений: ${Utils.formatNumber(analysis.sentences)}
+- Абзацев: ${Utils.formatNumber(analysis.paragraphs)}
+
+ЧИТАЕМОСТЬ:
+- Оценка: ${analysis.readabilityScore.score} (${analysis.readabilityScore.level})
+- Среднее слов в предложении: ${analysis.avgWordsPerSentence}
+- Средняя длина слова: ${analysis.avgCharsPerWord}
+
+ЧАСТОТА СЛОВ (ТОП-10):
+${analysis.topWords.slice(0, 10).map(([word, count], index) => 
+    `${index + 1}. ${word} - ${count} раз`
+).join('\n')}
+                `.trim();
+
+                Utils.copyToClipboard(text);
+            }
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            new TextAnalyzerPage();
+        });
+    </script>
+
+    <style>
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        .page-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .tool-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .input-section {
+            margin-bottom: 3rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--gradient-dark);
+            border: 1px solid var(--neon-blue);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-neon);
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Readability Section */
+        .readability-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        .readability-card {
+            background: var(--gradient-dark);
+            border: 1px solid var(--neon-blue);
+            border-radius: 8px;
+            padding: 2rem;
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .readability-score {
+            text-align: center;
+        }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid var(--neon-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .score-circle.score-good {
+            border-color: var(--neon-green);
+            color: var(--neon-green);
+            box-shadow: 0 0 20px rgba(0, 255, 128, 0.3);
+        }
+
+        .score-circle.score-medium {
+            border-color: #ffaa00;
+            color: #ffaa00;
+            box-shadow: 0 0 20px rgba(255, 170, 0, 0.3);
+        }
+
+        .score-circle.score-poor {
+            border-color: var(--neon-pink);
+            color: var(--neon-pink);
+            box-shadow: 0 0 20px rgba(255, 0, 128, 0.3);
+        }
+
+        .score-label {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        .readability-details {
+            flex: 1;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+        }
+
+        .detail-label {
+            color: var(--text-secondary);
+        }
+
+        .detail-value {
+            color: var(--neon-blue);
+            font-weight: bold;
+        }
+
+        /* Frequency Section */
+        .frequency-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .frequency-container {
+            background: var(--gradient-dark);
+            border: 1px solid var(--neon-pink);
+            border-radius: 8px;
+            padding: 1.5rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .frequency-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .frequency-item {
+            display: grid;
+            grid-template-columns: 40px 1fr 2fr 60px;
+            gap: 1rem;
+            align-items: center;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+
+        .frequency-item:hover {
+            background: rgba(255, 0, 128, 0.1);
+        }
+
+        .frequency-rank {
+            color: var(--neon-blue);
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .frequency-word {
+            color: var(--text-primary);
+            font-weight: bold;
+        }
+
+        .frequency-bar {
+            background: rgba(255, 0, 128, 0.2);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .frequency-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple));
+            transition: width 0.5s ease;
+        }
+
+        .frequency-count {
+            color: var(--neon-green);
+            font-weight: bold;
+            text-align: right;
+        }
+
+        /* Export Section */
+        .export-section {
+            text-align: center;
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .no-data {
+            text-align: center;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .readability-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .section-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+
+            .frequency-item {
+                grid-template-columns: 30px 1fr 50px;
+                gap: 0.5rem;
+            }
+
+            .frequency-bar {
+                grid-column: 1 / -1;
+                margin-top: 0.5rem;
+            }
+
+            .controls {
+                justify-content: center;
+            }
+
+            .export-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</body>
+</html>

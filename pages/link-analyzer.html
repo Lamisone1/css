@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анализ ссылок - CYBER SEO Tools</title>
+    <meta name="description" content="Анализируйте ссылки в тексте: извлечение доменов, проверка протоколов, классификация по типам.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-container"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">
+                🔗 <span class="text-neon">Анализ</span> <span class="text-pink">ссылок</span>
+            </h1>
+            <p class="page-description">
+                Анализируйте ссылки в тексте: извлечение доменов, проверка протоколов, классификация по типам (социальные, изображения, документы).
+            </p>
+        </div>
+
+        <div class="tool-container">
+            <!-- Input Section -->
+            <div class="input-section">
+                <div class="form-group">
+                    <label class="form-label">Введите текст со ссылками для анализа</label>
+                    <textarea 
+                        id="textInput" 
+                        class="form-textarea" 
+                        placeholder="Вставьте текст, содержащий ссылки, или список URL-адресов..."
+                        rows="10"
+                    ></textarea>
+                </div>
+                
+                <div class="controls">
+                    <button id="analyzeBtn" class="btn btn-primary">🔍 Анализировать ссылки</button>
+                    <button id="clearBtn" class="btn btn-secondary">🗑️ Очистить</button>
+                    <button id="loadSample" class="btn btn-secondary">📄 Загрузить пример</button>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <!-- Basic Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon text-neon">🔗</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="totalLinks">0</div>
+                            <div class="stat-label">Всего ссылок</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon text-pink">🔗</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="uniqueLinks">0</div>
+                            <div class="stat-label">Уникальных ссылок</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon text-green">🌐</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="uniqueDomains">0</div>
+                            <div class="stat-label">Уникальных доменов</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon text-neon">🔒</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="httpsCount">0</div>
+                            <div class="stat-label">HTTPS ссылок</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Protocol Analysis -->
+                <div class="protocol-section">
+                    <h3 class="section-title text-neon">Анализ протоколов</h3>
+                    <div class="protocol-chart">
+                        <div class="protocol-item">
+                            <div class="protocol-label">
+                                <span class="protocol-icon text-green">🔒</span>
+                                HTTPS
+                            </div>
+                            <div class="protocol-bar">
+                                <div class="protocol-fill https-fill" id="httpsBar"></div>
+                            </div>
+                            <div class="protocol-count" id="httpsPercent">0%</div>
+                        </div>
+                        <div class="protocol-item">
+                            <div class="protocol-label">
+                                <span class="protocol-icon text-pink">⚠️</span>
+                                HTTP
+                            </div>
+                            <div class="protocol-bar">
+                                <div class="protocol-fill http-fill" id="httpBar"></div>
+                            </div>
+                            <div class="protocol-count" id="httpPercent">0%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Link Types Analysis -->
+                <div class="types-section">
+                    <h3 class="section-title text-pink">Типы ссылок</h3>
+                    <div class="types-grid">
+                        <div class="type-card">
+                            <div class="type-icon text-neon">🌐</div>
+                            <div class="type-title">Внешние</div>
+                            <div class="type-count" id="externalCount">0</div>
+                        </div>
+                        <div class="type-card">
+                            <div class="type-icon text-pink">👥</div>
+                            <div class="type-title">Социальные</div>
+                            <div class="type-count" id="socialCount">0</div>
+                        </div>
+                        <div class="type-card">
+                            <div class="type-icon text-green">🖼️</div>
+                            <div class="type-title">Изображения</div>
+                            <div class="type-count" id="imageCount">0</div>
+                        </div>
+                        <div class="type-card">
+                            <div class="type-icon text-neon">📄</div>
+                            <div class="type-title">Документы</div>
+                            <div class="type-count" id="documentCount">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Domains List -->
+                <div class="domains-section">
+                    <div class="section-header">
+                        <h3 class="section-title text-green">Найденные домены</h3>
+                        <div class="domain-controls">
+                            <button id="copyDomains" class="btn btn-secondary">📋 Копировать домены</button>
+                            <button id="exportDomains" class="btn btn-secondary">📊 Экспорт доменов</button>
+                        </div>
+                    </div>
+                    
+                    <div class="domains-container" id="domainsContainer">
+                        <!-- Domains will be displayed here -->
+                    </div>
+                </div>
+
+                <!-- Export Section -->
+                <div class="export-section">
+                    <h3 class="section-title text-green">Экспорт результатов</h3>
+                    <div class="export-buttons">
+                        <button id="exportCSV" class="btn btn-primary">📄 Экспорт анализа CSV</button>
+                        <button id="exportExcel" class="btn btn-primary">📊 Экспорт анализа Excel</button>
+                        <button id="copyAnalysis" class="btn btn-secondary">📋 Копировать анализ</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <script src="../js/main.js"></script>
+    <script>
+        class LinkAnalyzerPage {
+            constructor() {
+                this.currentAnalysis = null;
+                this.init();
+            }
+
+            init() {
+                this.loadComponents();
+                this.setupEventListeners();
+            }
+
+            loadComponents() {
+                // Load header
+                fetch('../components/header.html')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('header-container').innerHTML = data;
+                    });
+                
+                // Load footer
+                fetch('../components/footer.html')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('footer-container').innerHTML = data;
+                    });
+            }
+
+            setupEventListeners() {
+                document.getElementById('analyzeBtn').addEventListener('click', () => this.analyzeLinks());
+                document.getElementById('clearBtn').addEventListener('click', () => this.clearText());
+                document.getElementById('loadSample').addEventListener('click', () => this.loadSampleText());
+                document.getElementById('exportCSV').addEventListener('click', () => this.exportCSV());
+                document.getElementById('exportExcel').addEventListener('click', () => this.exportExcel());
+                document.getElementById('exportDomains').addEventListener('click', () => this.exportDomains());
+                document.getElementById('copyDomains').addEventListener('click', () => this.copyDomains());
+                document.getElementById('copyAnalysis').addEventListener('click', () => this.copyAnalysis());
+
+                // Real-time analysis on input
+                const textInput = document.getElementById('textInput');
+                textInput.addEventListener('input', Utils.debounce(() => {
+                    if (textInput.value.trim().length > 0) {
+                        this.analyzeLinks();
+                    }
+                }, 500));
+            }
+
+            analyzeLinks() {
+                const textInput = document.getElementById('textInput');
+                const text = textInput.value.trim();
+
+                if (!text) {
+                    Utils.showNotification('Введите текст со ссылками для анализа', 'error');
+                    return;
+                }
+
+                this.currentAnalysis = LinkAnalyzer.analyze(text);
+                
+                if (!this.currentAnalysis) {
+                    Utils.showNotification('Ошибка при анализе ссылок', 'error');
+                    return;
+                }
+
+                this.displayResults();
+            }
+
+            displayResults() {
+                const resultsSection = document.getElementById('resultsSection');
+                
+                // Update basic stats
+                document.getElementById('totalLinks').textContent = Utils.formatNumber(this.currentAnalysis.totalLinks);
+                document.getElementById('uniqueLinks').textContent = Utils.formatNumber(this.currentAnalysis.uniqueLinks);
+                document.getElementById('uniqueDomains').textContent = Utils.formatNumber(this.currentAnalysis.uniqueDomains);
+                document.getElementById('httpsCount').textContent = Utils.formatNumber(this.currentAnalysis.protocols.https);
+
+                // Update protocol analysis
+                this.displayProtocolAnalysis();
+
+                // Update link types
+                this.displayLinkTypes();
+
+                // Display domains
+                this.displayDomains();
+
+                resultsSection.style.display = 'block';
+                resultsSection.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            displayProtocolAnalysis() {
+                const totalProtocols = this.currentAnalysis.protocols.https + this.currentAnalysis.protocols.http;
+                
+                if (totalProtocols === 0) {
+                    document.getElementById('httpsPercent').textContent = '0%';
+                    document.getElementById('httpPercent').textContent = '0%';
+                    document.getElementById('httpsBar').style.width = '0%';
+                    document.getElementById('httpBar').style.width = '0%';
+                    return;
+                }
+
+                const httpsPercent = Math.round((this.currentAnalysis.protocols.https / totalProtocols) * 100);
+                const httpPercent = Math.round((this.currentAnalysis.protocols.http / totalProtocols) * 100);
+
+                document.getElementById('httpsPercent').textContent = `${httpsPercent}%`;
+                document.getElementById('httpPercent').textContent = `${httpPercent}%`;
+                document.getElementById('httpsBar').style.width = `${httpsPercent}%`;
+                document.getElementById('httpBar').style.width = `${httpPercent}%`;
+            }
+
+            displayLinkTypes() {
+                document.getElementById('externalCount').textContent = this.currentAnalysis.linkTypes.external;
+                document.getElementById('socialCount').textContent = this.currentAnalysis.linkTypes.social;
+                document.getElementById('imageCount').textContent = this.currentAnalysis.linkTypes.images;
+                document.getElementById('documentCount').textContent = this.currentAnalysis.linkTypes.documents;
+            }
+
+            displayDomains() {
+                const container = document.getElementById('domainsContainer');
+                const domains = this.currentAnalysis.domains;
+
+                if (domains.length === 0) {
+                    container.innerHTML = '<p class="no-data">Домены не найдены</p>';
+                    return;
+                }
+
+                let html = '<div class="domains-list">';
+                domains.forEach((domain, index) => {
+                    html += `
+                        <div class="domain-item">
+                            <div class="domain-number">${index + 1}</div>
+                            <div class="domain-name">${domain}</div>
+                            <div class="domain-actions">
+                                <button class="btn-mini" onclick="window.open('https://${domain}', '_blank')">🔗</button>
+                                <button class="btn-mini" onclick="linkAnalyzer.copyDomain('${domain}')">📋</button>
+                            </div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+
+                container.innerHTML = html;
+            }
+
+            copyDomain(domain) {
+                Utils.copyToClipboard(domain);
+            }
+
+            loadSampleText() {
+                const sampleText = `Посетите наш сайт https://example.com для получения дополнительной информации.
+                
+Полезные ресурсы:
+- https://google.com - поисковая система
+- https://github.com/user/repo - репозиторий на GitHub
+- http://old-site.com - старый сайт без HTTPS
+- https://facebook.com/page - страница в Facebook
+- https://youtube.com/watch?v=123 - видео на YouTube
+- https://example.com/image.jpg - изображение
+- https://example.com/document.pdf - PDF документ
+- https://twitter.com/username - профиль в Twitter
+- https://linkedin.com/in/profile - профиль в LinkedIn
+
+Дополнительные ссылки:
+https://vk.com/group
+https://ok.ru/profile
+https://telegram.org/
+https://example.com/file.xlsx
+https://another-domain.org/page.html`;
+
+                document.getElementById('textInput').value = sampleText;
+                this.analyzeLinks();
+                Utils.showNotification('Загружен пример текста со ссылками', 'success');
+            }
+
+            clearText() {
+                document.getElementById('textInput').value = '';
+                document.getElementById('resultsSection').style.display = 'none';
+                this.currentAnalysis = null;
+                Utils.showNotification('Текст очищен', 'success');
+            }
+
+            exportCSV() {
+                if (!this.currentAnalysis) {
+                    Utils.showNotification('Нет данных для экспорта', 'error');
+                    return;
+                }
+
+                const data = [
+                    { metric: 'Всего ссылок', value: this.currentAnalysis.totalLinks },
+                    { metric: 'Уникальных ссылок', value: this.currentAnalysis.uniqueLinks },
+                    { metric: 'Уникальных доменов', value: this.currentAnalysis.uniqueDomains },
+                    { metric: 'HTTPS ссылок', value: this.currentAnalysis.protocols.https },
+                    { metric: 'HTTP ссылок', value: this.currentAnalysis.protocols.http },
+                    { metric: 'Внешних ссылок', value: this.currentAnalysis.linkTypes.external },
+                    { metric: 'Социальных ссылок', value: this.currentAnalysis.linkTypes.social },
+                    { metric: 'Ссылок на изображения', value: this.currentAnalysis.linkTypes.images },
+                    { metric: 'Ссылок на документы', value: this.currentAnalysis.linkTypes.documents }
+                ];
+
+                Utils.exportToCSV(data, 'link-analysis.csv');
+            }
+
+            exportExcel() {
+                if (!this.currentAnalysis) {
+                    Utils.showNotification('Нет данных для экспорта', 'error');
+                    return;
+                }
+
+                const data = [
+                    { metric: 'Всего ссылок', value: this.currentAnalysis.totalLinks },
+                    { metric: 'Уникальных ссылок', value: this.currentAnalysis.uniqueLinks },
+                    { metric: 'Уникальных доменов', value: this.currentAnalysis.uniqueDomains },
+                    { metric: 'HTTPS ссылок', value: this.currentAnalysis.protocols.https },
+                    { metric: 'HTTP ссылок', value: this.currentAnalysis.protocols.http },
+                    { metric: 'Внешних ссылок', value: this.currentAnalysis.linkTypes.external },
+                    { metric: 'Социальных ссылок', value: this.currentAnalysis.linkTypes.social },
+                    { metric: 'Ссылок на изображения', value: this.currentAnalysis.linkTypes.images },
+                    { metric: 'Ссылок на документы', value: this.currentAnalysis.linkTypes.documents }
+                ];
+
+                Utils.exportToExcel(data, 'link-analysis.xlsx');
+            }
+
+            exportDomains() {
+                if (!this.currentAnalysis || !this.currentAnalysis.domains.length) {
+                    Utils.showNotification('Нет доменов для экспорта', 'error');
+                    return;
+                }
+
+                const data = this.currentAnalysis.domains.map((domain, index) => ({
+                    number: index + 1,
+                    domain: domain
+                }));
+
+                Utils.exportToCSV(data, 'domains.csv');
+            }
+
+            copyDomains() {
+                if (!this.currentAnalysis || !this.currentAnalysis.domains.length) {
+                    Utils.showNotification('Нет доменов для копирования', 'error');
+                    return;
+                }
+
+                const domainsText = this.currentAnalysis.domains.join('\n');
+                Utils.copyToClipboard(domainsText);
+            }
+
+            copyAnalysis() {
+                if (!this.currentAnalysis) {
+                    Utils.showNotification('Нет данных для копирования', 'error');
+                    return;
+                }
+
+                const analysis = this.currentAnalysis;
+                const text = `
+АНАЛИЗ ССЫЛОК
+=============
+
+ОСНОВНЫЕ ПОКАЗАТЕЛИ:
+- Всего ссылок: ${analysis.totalLinks}
+- Уникальных ссылок: ${analysis.uniqueLinks}
+- Уникальных доменов: ${analysis.uniqueDomains}
+
+ПРОТОКОЛЫ:
+- HTTPS: ${analysis.protocols.https}
+- HTTP: ${analysis.protocols.http}
+
+ТИПЫ ССЫЛОК:
+- Внешние: ${analysis.linkTypes.external}
+- Социальные: ${analysis.linkTypes.social}
+- Изображения: ${analysis.linkTypes.images}
+- Документы: ${analysis.linkTypes.documents}
+
+НАЙДЕННЫЕ ДОМЕНЫ:
+${analysis.domains.map((domain, index) => `${index + 1}. ${domain}`).join('\n')}
+                `.trim();
+
+                Utils.copyToClipboard(text);
+            }
+        }
+
+        // Initialize the page
+        let linkAnalyzer;
+        document.addEventListener('DOMContentLoaded', function() {
+            linkAnalyzer = new LinkAnalyzerPage();
+        });
+    </script>
+
+    <style>
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        .page-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .tool-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .input-section {
+            margin-bottom: 3rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--gradient-dark);
+            border: 1px solid var(--neon-blue);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-neon);
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Protocol Section */
+        .protocol-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        .protocol-chart {
+            background: var(--gradient-dark);
+            border: 1px solid var(--neon-blue);
+            border-radius: 8px;
+            padding: 2rem;
+        }
+
+        .protocol-item {
+            display: grid;
+            grid-template-columns: 150px 1fr 80px;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .protocol-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .protocol-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+        }
+
+        .protocol-icon {
+            font-size: 1.2rem;
+        }
+
+        .protocol-bar {
+            background: rgba(0, 255, 255, 0.2);
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .protocol-fill {
+            height: 100%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        .https-fill {
+            background: linear-gradient(90deg, var(--neon-green), #00aa00);
+        }
+
+        .http-fill {
+            background: linear-gradient(90deg, var(--neon-pink), #aa0000);
+        }
+
+        .protocol-count {
+            text-align: right;
+            font-weight: bold;
+            color: var(--neon-blue);
+        }
+
+        /* Types Section */
+        .types-section {
+            margin-bottom: 3rem;
+        }
+
+        .types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .type-card {
+            background: var(--gradient-dark);
+            border: 1px solid var(--neon-pink);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .type-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-pink);
+        }
+
+        .type-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .type-title {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .type-count {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+
+        /* Domains Section */
+        .domains-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .domain-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .domains-container {
+            background: var(--gradient-dark);
+            border: 1px solid var(--neon-green);
+            border-radius: 8px;
+            padding: 1.5rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .domains-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .domain-item {
+            display: grid;
+            grid-template-columns: 40px 1fr auto;
+            gap: 1rem;
+            align-items: center;
+            padding: 0.8rem;
+            border-radius: 4px;
+            border: 1px solid rgba(0, 255, 128, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .domain-item:hover {
+            background: rgba(0, 255, 128, 0.1);
+            border-color: var(--neon-green);
+        }
+
+        .domain-number {
+            color: var(--neon-blue);
+            font-weight: bold;
+            text-align: center;
+            font-family: monospace;
+        }
+
+        .domain-name {
+            color: var(--text-primary);
+            font-weight: bold;
+            word-break: break-all;
+        }
+
+        .domain-actions {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .btn-mini {
+            padding: 0.25rem 0.5rem;
+            background: var(--gradient-primary);
+            color: var(--text-primary);
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-mini:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Export Section */
+        .export-section {
+            text-align: center;
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .no-data {
+            text-align: center;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .types-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .protocol-item {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+                text-align: center;
+            }
+
+            .protocol-bar {
+                order: 2;
+            }
+
+            .protocol-count {
+                order: 3;
+                text-align: center;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .domain-controls {
+                justify-content: center;
+            }
+
+            .domain-item {
+                grid-template-columns: 30px 1fr;
+                gap: 0.5rem;
+            }
+
+            .domain-actions {
+                grid-column: 1 / -1;
+                justify-content: center;
+                margin-top: 0.5rem;
+            }
+
+            .controls {
+                justify-content: center;
+            }
+
+            .export-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</body>
+</html>
