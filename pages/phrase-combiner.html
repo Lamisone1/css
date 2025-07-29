@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Комбинатор фраз - SEO Tools Bag</title>
+    <meta name="description" content="Создавайте тысячи комбинаций ключевых фраз с помощью пресетов городов, коммерческих и информационных запросов.">
+    <meta name="keywords" content="комбинатор фраз, генератор ключевых слов, SEO фразы, семантическое ядро, ключевые слова">
+    <link rel="canonical" href="https://seotoolsbag.com/phrase-combiner">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Комбинатор фраз - SEO Tools Bag">
+    <meta property="og:description" content="Создавайте тысячи комбинаций ключевых фраз с помощью пресетов городов, коммерческих и информационных запросов.">
+    <meta property="og:url" content="https://seotoolsbag.com/phrase-combiner">
+    <meta property="og:type" content="website">
+    
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-container"></div>
+
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumbs">
+        <ol class="breadcrumb-list">
+            <li class="breadcrumb-item">
+                <a href="/" class="breadcrumb-link">Главная</a>
+            </li>
+            <li class="breadcrumb-item">
+                <span class="breadcrumb-current">Комбинатор фраз</span>
+            </li>
+        </ol>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">
+                🔀 <span class="text-neon">Комбинатор</span> <span class="text-pink">фраз</span>
+            </h1>
+            <p class="page-description">
+                Создавайте тысячи комбинаций ключевых фраз, используя пресеты или собственные списки. 
+                Поддерживается до 6 полей для максимальной гибкости.
+            </p>
+        </div>
+
+        <div class="tool-container">
+            <!-- Controls -->
+            <div class="controls-section">
+                <div class="control-group">
+                    <button id="addField" class="btn btn-primary">+ Добавить поле</button>
+                    <button id="removeField" class="btn btn-secondary">- Убрать поле</button>
+                    <span class="field-counter">Полей: <span id="fieldCount">3</span>/6</span>
+                </div>
+                
+                <div class="control-group">
+                    <button id="combineBtn" class="btn btn-primary">🔀 Создать комбинации</button>
+                    <button id="clearAll" class="btn btn-secondary">🗑️ Очистить все</button>
+                </div>
+            </div>
+
+            <!-- Input Fields -->
+            <div class="input-section">
+                <div class="input-fields" id="inputFields">
+                    <!-- Fields will be generated dynamically -->
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <div class="results-header">
+                    <h3 class="text-green">Результаты комбинации</h3>
+                    <div class="results-stats">
+                        <span class="stat">Всего комбинаций: <span id="totalCombinations" class="text-neon">0</span></span>
+                    </div>
+                </div>
+                
+                <div class="export-controls">
+                    <button id="exportCSV" class="btn btn-primary">📄 Экспорт CSV</button>
+                    <button id="exportExcel" class="btn btn-primary">📊 Экспорт Excel</button>
+                    <button id="copyResults" class="btn btn-secondary">📋 Копировать</button>
+                </div>
+                
+                <div class="results-container" id="resultsContainer">
+                    <!-- Results will be displayed here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <script src="../js/main.js"></script>
+    <script>
+        class PhraseCombinerPage {
+            constructor() {
+                this.fieldCount = 3;
+                this.maxFields = 6;
+                this.minFields = 2;
+                this.currentResults = [];
+                
+                this.init();
+            }
+
+            init() {
+                this.loadComponents();
+                this.setupEventListeners();
+                this.generateInitialFields();
+            }
+
+            loadComponents() {
+                // Load header
+                fetch('../components/header.html')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('header-container').innerHTML = data;
+                    });
+                
+                // Load footer
+                fetch('../components/footer.html')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('footer-container').innerHTML = data;
+                    });
+            }
+
+            setupEventListeners() {
+                document.getElementById('addField').addEventListener('click', () => this.addField());
+                document.getElementById('removeField').addEventListener('click', () => this.removeField());
+                document.getElementById('combineBtn').addEventListener('click', () => this.combinePhases());
+                document.getElementById('clearAll').addEventListener('click', () => this.clearAll());
+                document.getElementById('exportCSV').addEventListener('click', () => this.exportCSV());
+                document.getElementById('exportExcel').addEventListener('click', () => this.exportExcel());
+                document.getElementById('copyResults').addEventListener('click', () => this.copyResults());
+            }
+
+            generateInitialFields() {
+                for (let i = 1; i <= this.fieldCount; i++) {
+                    this.createField(i);
+                }
+                this.updateFieldCounter();
+            }
+
+            createField(index) {
+                const fieldContainer = document.createElement('div');
+                fieldContainer.className = 'field-container';
+                fieldContainer.id = `field-${index}`;
+
+                fieldContainer.innerHTML = `
+                    <div class="field-header">
+                        <label class="form-label">Поле ${index}</label>
+                        <div class="preset-controls">
+                            <select class="preset-select" id="preset-${index}">
+                                <option value="">Выберите пресет</option>
+                                <option value="cities">Города РФ (${PhraseCombiner.presets.cities.length})</option>
+                                <option value="commercial">Коммерческие ключи (${PhraseCombiner.presets.commercial.length})</option>
+                                <option value="informational">Информационные ключи (${PhraseCombiner.presets.informational.length})</option>
+                                <option value="geo">Гео-модификаторы (${PhraseCombiner.presets.geo.length})</option>
+                                <option value="modifiers">Модификаторы (${PhraseCombiner.presets.modifiers.length})</option>
+                            </select>
+                            <button type="button" class="btn-preset" onclick="phraseCombiner.applyPreset(${index})">Применить</button>
+                        </div>
+                    </div>
+                    <textarea 
+                        class="form-textarea field-input" 
+                        id="input-${index}" 
+                        placeholder="Введите фразы, каждая с новой строки..."
+                        rows="8"
+                    ></textarea>
+                    <div class="field-stats">
+                        <span class="phrase-count">Фраз: <span id="count-${index}">0</span></span>
+                    </div>
+                `;
+
+                document.getElementById('inputFields').appendChild(fieldContainer);
+
+                // Setup input event listener for counting
+                const textarea = document.getElementById(`input-${index}`);
+                textarea.addEventListener('input', () => this.updatePhraseCount(index));
+            }
+
+            updatePhraseCount(index) {
+                const textarea = document.getElementById(`input-${index}`);
+                const phrases = textarea.value.split('\n').filter(phrase => phrase.trim().length > 0);
+                document.getElementById(`count-${index}`).textContent = phrases.length;
+            }
+
+            applyPreset(index) {
+                const presetSelect = document.getElementById(`preset-${index}`);
+                const presetKey = presetSelect.value;
+                
+                if (!presetKey || !PhraseCombiner.presets[presetKey]) {
+                    Utils.showNotification('Выберите пресет из списка', 'error');
+                    return;
+                }
+
+                const textarea = document.getElementById(`input-${index}`);
+                const presetPhrases = PhraseCombiner.presets[presetKey];
+                
+                // Add to existing content or replace
+                const currentContent = textarea.value.trim();
+                const newContent = currentContent 
+                    ? currentContent + '\n' + presetPhrases.join('\n')
+                    : presetPhrases.join('\n');
+                
+                textarea.value = newContent;
+                this.updatePhraseCount(index);
+                
+                Utils.showNotification(`Добавлено ${presetPhrases.length} фраз из пресета "${presetSelect.options[presetSelect.selectedIndex].text}"`, 'success');
+            }
+
+            addField() {
+                if (this.fieldCount >= this.maxFields) {
+                    Utils.showNotification(`Максимальное количество полей: ${this.maxFields}`, 'error');
+                    return;
+                }
+
+                this.fieldCount++;
+                this.createField(this.fieldCount);
+                this.updateFieldCounter();
+                
+                Utils.showNotification(`Добавлено поле ${this.fieldCount}`, 'success');
+            }
+
+            removeField() {
+                if (this.fieldCount <= this.minFields) {
+                    Utils.showNotification(`Минимальное количество полей: ${this.minFields}`, 'error');
+                    return;
+                }
+
+                const fieldToRemove = document.getElementById(`field-${this.fieldCount}`);
+                if (fieldToRemove) {
+                    fieldToRemove.remove();
+                }
+
+                this.fieldCount--;
+                this.updateFieldCounter();
+                
+                Utils.showNotification(`Удалено поле ${this.fieldCount + 1}`, 'success');
+            }
+
+            updateFieldCounter() {
+                document.getElementById('fieldCount').textContent = this.fieldCount;
+            }
+
+            combinePhases() {
+                const inputs = [];
+                
+                // Collect input data
+                for (let i = 1; i <= this.fieldCount; i++) {
+                    const textarea = document.getElementById(`input-${i}`);
+                    const phrases = textarea.value.split('\n')
+                        .map(phrase => phrase.trim())
+                        .filter(phrase => phrase.length > 0);
+                    
+                    if (phrases.length > 0) {
+                        inputs.push(phrases);
+                    }
+                }
+
+                if (inputs.length < 2) {
+                    Utils.showNotification('Заполните как минимум 2 поля для создания комбинаций', 'error');
+                    return;
+                }
+
+                // Generate combinations
+                const combinations = PhraseCombiner.combinePhases(inputs);
+                
+                if (combinations.length === 0) {
+                    Utils.showNotification('Не удалось создать комбинации', 'error');
+                    return;
+                }
+
+                this.currentResults = combinations.map(combo => ({ phrase: combo }));
+                this.displayResults();
+                
+                Utils.showNotification(`Создано ${combinations.length} комбинаций`, 'success');
+            }
+
+            displayResults() {
+                const resultsSection = document.getElementById('resultsSection');
+                const resultsContainer = document.getElementById('resultsContainer');
+                const totalCombinations = document.getElementById('totalCombinations');
+
+                totalCombinations.textContent = Utils.formatNumber(this.currentResults.length);
+
+                let html = '<div class="results-list">';
+                this.currentResults.forEach((result, index) => {
+                    html += `
+                        <div class="result-item">
+                            <span class="result-number">${index + 1}.</span>
+                            <span class="result-phrase">${result.phrase}</span>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+
+                resultsContainer.innerHTML = html;
+                resultsSection.style.display = 'block';
+
+                // Scroll to results
+                resultsSection.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            clearAll() {
+                for (let i = 1; i <= this.fieldCount; i++) {
+                    const textarea = document.getElementById(`input-${i}`);
+                    if (textarea) {
+                        textarea.value = '';
+                        this.updatePhraseCount(i);
+                    }
+                }
+
+                document.getElementById('resultsSection').style.display = 'none';
+                this.currentResults = [];
+                
+                Utils.showNotification('Все поля очищены', 'success');
+            }
+
+            exportCSV() {
+                if (this.currentResults.length === 0) {
+                    Utils.showNotification('Нет данных для экспорта', 'error');
+                    return;
+                }
+
+                Utils.exportToCSV(this.currentResults, 'phrase-combinations.csv');
+            }
+
+            exportExcel() {
+                if (this.currentResults.length === 0) {
+                    Utils.showNotification('Нет данных для экспорта', 'error');
+                    return;
+                }
+
+                Utils.exportToExcel(this.currentResults, 'phrase-combinations.xlsx');
+            }
+
+            copyResults() {
+                if (this.currentResults.length === 0) {
+                    Utils.showNotification('Нет данных для копирования', 'error');
+                    return;
+                }
+
+                const text = this.currentResults.map(result => result.phrase).join('\n');
+                Utils.copyToClipboard(text);
+            }
+        }
+
+        // Initialize the page
+        let phraseCombiner;
+        document.addEventListener('DOMContentLoaded', function() {
+            phraseCombiner = new PhraseCombinerPage();
+        });
+    </script>
+
+    <style>
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        .page-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .tool-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .controls-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--gradient-dark);
+            border-radius: 8px;
+            border: 1px solid var(--neon-blue);
+        }
+
+        .control-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .field-counter {
+            color: var(--neon-green);
+            font-weight: bold;
+            margin-left: 1rem;
+        }
+
+        .input-section {
+            margin-bottom: 2rem;
+        }
+
+        .input-fields {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .field-container {
+            background: var(--gradient-dark);
+            border: 1px solid var(--neon-blue);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .field-container:hover {
+            box-shadow: var(--shadow-neon);
+        }
+
+        .field-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .preset-controls {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .preset-select {
+            padding: 0.5rem;
+            background: var(--secondary-bg);
+            border: 1px solid var(--neon-blue);
+            border-radius: 4px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            min-width: 200px;
+        }
+
+        .btn-preset {
+            padding: 0.5rem 1rem;
+            background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple));
+            color: var(--text-primary);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-preset:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(255, 0, 128, 0.3);
+        }
+
+        .field-input {
+            width: 100%;
+            min-height: 200px;
+            resize: vertical;
+        }
+
+        .field-stats {
+            margin-top: 0.5rem;
+            text-align: right;
+        }
+
+        .phrase-count {
+            color: var(--neon-green);
+            font-size: 0.9rem;
+        }
+
+        .results-section {
+            margin-top: 3rem;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .results-stats {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .stat {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .export-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .results-list {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .result-item {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .result-item:hover {
+            background: rgba(0, 255, 255, 0.05);
+        }
+
+        .result-number {
+            color: var(--neon-blue);
+            font-weight: bold;
+            margin-right: 1rem;
+            min-width: 50px;
+            font-family: monospace;
+        }
+
+        .result-phrase {
+            color: var(--text-primary);
+            flex: 1;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .controls-section {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .input-fields {
+                grid-template-columns: 1fr;
+            }
+
+            .field-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .preset-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .preset-select {
+                min-width: auto;
+            }
+
+            .export-controls {
+                justify-content: center;
+            }
+        }
+    </style>
+</body>
+</html>

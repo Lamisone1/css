@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Букмарклеты - SEO Tools Bag</title>
+    <meta name="description" content="Коллекция полезных букмарклетов для SEO: быстрый анализ страницы, проверка мета-тегов, анализ заголовков и многое другое.">
+    <meta name="keywords" content="букмарклеты, SEO букмарклеты, анализ страницы, мета-теги, заголовки, SEO инструменты">
+    <link rel="canonical" href="https://seotoolsbag.com/bookmarklets">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="SEO Букмарклеты - SEO Tools Bag">
+    <meta property="og:description" content="Коллекция полезных букмарклетов для SEO: быстрый анализ страницы, проверка мета-тегов, анализ заголовков и многое другое.">
+    <meta property="og:url" content="https://seotoolsbag.com/bookmarklets">
+    <meta property="og:type" content="website">
+    
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-container"></div>
+
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumbs">
+        <ol class="breadcrumb-list">
+            <li class="breadcrumb-item">
+                <a href="/" class="breadcrumb-link">Главная</a>
+            </li>
+            <li class="breadcrumb-item">
+                <span class="breadcrumb-current">Букмарклеты</span>
+            </li>
+        </ol>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">
+                🔖 <span class="text-blue">SEO</span> <span class="text-blue-light">Букмарклеты</span>
+            </h1>
+            <p class="page-description">
+                Коллекция полезных букмарклетов для SEO-специалистов. Просто перетащите ссылку в закладки браузера и используйте на любой странице для быстрого анализа.
+            </p>
+        </div>
+
+        <div class="tool-container">
+            <!-- Instructions -->
+            <div class="instructions-section">
+                <div class="instruction-card">
+                    <h3 class="text-blue-light">📚 Как использовать букмарклеты</h3>
+                    <ol class="instruction-list">
+                        <li>Нажмите правой кнопкой мыши на ссылку букмарклета</li>
+                        <li>Выберите "Добавить в закладки" или "Bookmark this link"</li>
+                        <li>Перейдите на любую веб-страницу</li>
+                        <li>Нажмите на добавленную закладку для запуска анализа</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Bookmarklets Grid -->
+            <div class="bookmarklets-grid">
+                <!-- SEO Analysis -->
+                <div class="bookmarklet-card">
+                    <div class="bookmarklet-icon text-blue">🔍</div>
+                    <h3 class="bookmarklet-title">SEO Анализ страницы</h3>
+                    <p class="bookmarklet-description">
+                        Показывает основную SEO информацию: title, description, заголовки H1-H6, количество слов, изображения без alt.
+                    </p>
+                    <div class="bookmarklet-link-container">
+                        <a href="javascript:(function(){var d=document,h=d.getElementsByTagName('head')[0],b=d.body,t=d.title,desc=d.querySelector('meta[name=description]'),h1=d.getElementsByTagName('h1'),h2=d.getElementsByTagName('h2'),h3=d.getElementsByTagName('h3'),imgs=d.getElementsByTagName('img'),words=b.innerText.split(/\s+/).length,imgsNoAlt=0;for(var i=0;i<imgs.length;i++){if(!imgs[i].alt)imgsNoAlt++;}var info='=== SEO АНАЛИЗ СТРАНИЦЫ ===\n\n';info+='📄 Title: '+(t||'НЕТ')+'\n';info+='📝 Description: '+(desc?desc.content:'НЕТ')+'\n';info+='📊 Длина title: '+(t?t.length:0)+' символов\n';info+='📊 Длина description: '+(desc?desc.content.length:0)+' символов\n';info+='🔤 Количество слов: '+words+'\n';info+='📷 Изображений без alt: '+imgsNoAlt+'/'+imgs.length+'\n\n';info+='=== ЗАГОЛОВКИ ===\n';info+='H1 ('+h1.length+'): ';for(var i=0;i<h1.length;i++){info+=h1[i].innerText+'; ';}info+='\nH2 ('+h2.length+'): ';for(var i=0;i<Math.min(h2.length,3);i++){info+=h2[i].innerText+'; ';}if(h2.length>3)info+='...';info+='\nH3 ('+h3.length+'): ';for(var i=0;i<Math.min(h3.length,3);i++){info+=h3[i].innerText+'; ';}if(h3.length>3)info+='...';alert(info);})();" class="bookmarklet-link">
+                            📊 SEO Анализ
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Meta Tags Check -->
+                <div class="bookmarklet-card">
+                    <div class="bookmarklet-icon text-blue-light">🏷️</div>
+                    <h3 class="bookmarklet-title">Проверка мета-тегов</h3>
+                    <p class="bookmarklet-description">
+                        Проверяет наличие и содержимое важных мета-тегов: title, description, keywords, robots, viewport.
+                    </p>
+                    <div class="bookmarklet-link-container">
+                        <a href="javascript:(function(){var metas=document.getElementsByTagName('meta'),info='=== МЕТА-ТЕГИ ===\n\n';info+='📄 Title: '+(document.title||'НЕТ')+'\n\n';var important=['description','keywords','robots','viewport','author','canonical'];for(var i=0;i<important.length;i++){var meta=document.querySelector('meta[name='+important[i]+']')||document.querySelector('meta[property='+important[i]+']')||document.querySelector('link[rel='+important[i]+']');info+='🏷️ '+important[i]+': '+(meta?(meta.content||meta.href||'ЕСТЬ'):'НЕТ')+'\n';}info+='\n=== OPEN GRAPH ===\n';var og=['og:title','og:description','og:image','og:url','og:type'];for(var i=0;i<og.length;i++){var meta=document.querySelector('meta[property=\"'+og[i]+'\"]');info+='📱 '+og[i]+': '+(meta?meta.content:'НЕТ')+'\n';}alert(info);})();" class="bookmarklet-link">
+                            🏷️ Мета-теги
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Headers Structure -->
+                <div class="bookmarklet-card">
+                    <div class="bookmarklet-icon text-blue-soft">📋</div>
+                    <h3 class="bookmarklet-title">Структура заголовков</h3>
+                    <p class="bookmarklet-description">
+                        Показывает иерархию заголовков H1-H6 на странице в удобном для анализа виде.
+                    </p>
+                    <div class="bookmarklet-link-container">
+                        <a href="javascript:(function(){var headers=document.querySelectorAll('h1,h2,h3,h4,h5,h6'),info='=== СТРУКТУРА ЗАГОЛОВКОВ ===\n\n';if(headers.length===0){alert('На странице нет заголовков H1-H6');return;}for(var i=0;i<headers.length;i++){var level=headers[i].tagName.substr(1),indent='';for(var j=1;j<level;j++){indent+='  ';}info+=indent+headers[i].tagName+': '+headers[i].innerText.substring(0,80)+(headers[i].innerText.length>80?'...':'')+'\n';}alert(info);})();" class="bookmarklet-link">
+                            📋 Заголовки
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Links Analysis -->
+                <div class="bookmarklet-card">
+                    <div class="bookmarklet-icon text-blue">🔗</div>
+                    <h3 class="bookmarklet-title">Анализ ссылок</h3>
+                    <p class="bookmarklet-description">
+                        Анализирует все ссылки на странице: внутренние, внешние, с атрибутом nofollow, без title.
+                    </p>
+                    <div class="bookmarklet-link-container">
+                        <a href="javascript:(function(){var links=document.getElementsByTagName('a'),internal=0,external=0,nofollow=0,noTitle=0,currentDomain=window.location.hostname;for(var i=0;i<links.length;i++){var link=links[i];if(link.href){if(link.hostname===currentDomain||link.href.startsWith('/')||link.href.startsWith('#')){internal++;}else{external++;}if(link.rel&&link.rel.includes('nofollow')){nofollow++;}if(!link.title){noTitle++;}}}var info='=== АНАЛИЗ ССЫЛОК ===\n\n';info+='🔗 Всего ссылок: '+links.length+'\n';info+='🏠 Внутренних: '+internal+'\n';info+='🌐 Внешних: '+external+'\n';info+='🚫 С nofollow: '+nofollow+'\n';info+='❓ Без title: '+noTitle+'\n';alert(info);})();" class="bookmarklet-link">
+                            🔗 Ссылки
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Images Analysis -->
+                <div class="bookmarklet-card">
+                    <div class="bookmarklet-icon text-blue-light">🖼️</div>
+                    <h3 class="bookmarklet-title">Анализ изображений</h3>
+                    <p class="bookmarklet-description">
+                        Проверяет изображения на наличие alt-атрибутов, title, размеры и оптимизацию.
+                    </p>
+                    <div class="bookmarklet-link-container">
+                        <a href="javascript:(function(){var imgs=document.getElementsByTagName('img'),total=imgs.length,noAlt=0,noTitle=0,large=0,info='=== АНАЛИЗ ИЗОБРАЖЕНИЙ ===\n\n';for(var i=0;i<imgs.length;i++){var img=imgs[i];if(!img.alt||img.alt.trim()===''){noAlt++;}if(!img.title){noTitle++;}if(img.naturalWidth>1200||img.naturalHeight>800){large++;}}info+='🖼️ Всего изображений: '+total+'\n';info+='❌ Без alt: '+noAlt+'\n';info+='❓ Без title: '+noTitle+'\n';info+='📏 Больших (>1200px): '+large+'\n\n';if(noAlt>0){info+='⚠️ Рекомендация: Добавьте alt-атрибуты\n';}if(large>5){info+='⚠️ Рекомендация: Оптимизируйте большие изображения\n';}alert(info);})();" class="bookmarklet-link">
+                            🖼️ Изображения
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Page Speed Info -->
+                <div class="bookmarklet-card">
+                    <div class="bookmarklet-icon text-blue-soft">⚡</div>
+                    <h3 class="bookmarklet-title">Информация о скорости</h3>
+                    <p class="bookmarklet-description">
+                        Показывает время загрузки страницы и основные метрики производительности.
+                    </p>
+                    <div class="bookmarklet-link-container">
+                        <a href="javascript:(function(){var perf=performance.timing,loadTime=perf.loadEventEnd-perf.navigationStart,domTime=perf.domContentLoadedEventEnd-perf.navigationStart,resources=performance.getEntriesByType('resource').length;var info='=== СКОРОСТЬ ЗАГРУЗКИ ===\n\n';info+='⏱️ Полная загрузка: '+(loadTime/1000).toFixed(2)+' сек\n';info+='🏗️ DOM готов: '+(domTime/1000).toFixed(2)+' сек\n';info+='📦 Ресурсов загружено: '+resources+'\n';info+='📄 Размер страницы: '+(document.documentElement.outerHTML.length/1024).toFixed(1)+' KB\n\n';if(loadTime>3000){info+='⚠️ Страница загружается медленно\n';}if(resources>100){info+='⚠️ Много ресурсов для загрузки\n';}alert(info);})();" class="bookmarklet-link">
+                            ⚡ Скорость
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Social Media Check -->
+                <div class="bookmarklet-card">
+                    <div class="bookmarklet-icon text-blue">📱</div>
+                    <h3 class="bookmarklet-title">Социальные сети</h3>
+                    <p class="bookmarklet-description">
+                        Проверяет наличие мета-тегов для социальных сетей: Open Graph, Twitter Cards.
+                    </p>
+                    <div class="bookmarklet-link-container">
+                        <a href="javascript:(function(){var og=['og:title','og:description','og:image','og:url','og:type','og:site_name'],twitter=['twitter:card','twitter:title','twitter:description','twitter:image'],info='=== СОЦИАЛЬНЫЕ СЕТИ ===\n\n📘 FACEBOOK/OPEN GRAPH:\n';for(var i=0;i<og.length;i++){var meta=document.querySelector('meta[property=\"'+og[i]+'\"]');info+='  '+og[i]+': '+(meta?'✅':'❌')+'\n';}info+='\n🐦 TWITTER:\n';for(var i=0;i<twitter.length;i++){var meta=document.querySelector('meta[name=\"'+twitter[i]+'\"]');info+='  '+twitter[i]+': '+(meta?'✅':'❌')+'\n';}var canonical=document.querySelector('link[rel=canonical]');info+='\n🔗 CANONICAL: '+(canonical?'✅ '+canonical.href:'❌')+'\n';alert(info);})();" class="bookmarklet-link">
+                            📱 Соцсети
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Schema Markup -->
+                <div class="bookmarklet-card">
+                    <div class="bookmarklet-icon text-blue-light">🏗️</div>
+                    <h3 class="bookmarklet-title">Структурированные данные</h3>
+                    <p class="bookmarklet-description">
+                        Ищет и анализирует структурированные данные Schema.org на странице.
+                    </p>
+                    <div class="bookmarklet-link-container">
+                        <a href="javascript:(function(){var jsonLd=document.querySelectorAll('script[type=\"application/ld+json\"]'),microdata=document.querySelectorAll('[itemscope]'),rdfa=document.querySelectorAll('[typeof]'),info='=== СТРУКТУРИРОВАННЫЕ ДАННЫЕ ===\n\n';info+='📊 JSON-LD скриптов: '+jsonLd.length+'\n';info+='🏷️ Microdata элементов: '+microdata.length+'\n';info+='🔖 RDFa элементов: '+rdfa.length+'\n\n';if(jsonLd.length>0){info+='JSON-LD типы:\n';for(var i=0;i<jsonLd.length;i++){try{var data=JSON.parse(jsonLd[i].textContent);info+='  - '+(data['@type']||'Unknown')+'\n';}catch(e){info+='  - Ошибка парсинга\n';}}}if(microdata.length>0){info+='\nMicrodata типы:\n';for(var i=0;i<Math.min(microdata.length,5);i++){info+='  - '+(microdata[i].getAttribute('itemtype')||'Unknown')+'\n';}}alert(info);})();" class="bookmarklet-link">
+                            🏗️ Schema
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Robots & Indexing -->
+                <div class="bookmarklet-card">
+                    <div class="bookmarklet-icon text-blue-soft">🤖</div>
+                    <h3 class="bookmarklet-title">Индексация и роботы</h3>
+                    <p class="bookmarklet-description">
+                        Проверяет настройки индексации: robots meta, canonical, noindex, nofollow.
+                    </p>
+                    <div class="bookmarklet-link-container">
+                        <a href="javascript:(function(){var robots=document.querySelector('meta[name=robots]'),viewport=document.querySelector('meta[name=viewport]'),canonical=document.querySelector('link[rel=canonical]'),info='=== ИНДЕКСАЦИЯ ===\n\n';info+='🤖 Robots: '+(robots?robots.content:'НЕТ (по умолчанию index,follow)')+'\n';info+='🔗 Canonical: '+(canonical?canonical.href:'НЕТ')+'\n';info+='📱 Viewport: '+(viewport?'✅':'❌')+'\n';var noindexLinks=document.querySelectorAll('a[rel*=nofollow]');info+='🚫 Ссылок с nofollow: '+noindexLinks.length+'\n\n';var httpEquiv=document.querySelector('meta[http-equiv=refresh]');if(httpEquiv){info+='⚠️ Найден redirect через meta refresh\n';}var xRobots=document.querySelector('meta[http-equiv=\"X-Robots-Tag\"]');if(xRobots){info+='🏷️ X-Robots-Tag: '+xRobots.content+'\n';}alert(info);})();" class="bookmarklet-link">
+                            🤖 Роботы
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Info -->
+            <div class="additional-info">
+                <div class="info-card">
+                    <h3 class="text-blue-light">💡 Дополнительные возможности</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <h4>🔧 Быстрая диагностика</h4>
+                            <p>Все букмарклеты работают мгновенно и не требуют загрузки дополнительных ресурсов</p>
+                        </div>
+                        <div class="info-item">
+                            <h4>📊 Подробная статистика</h4>
+                            <p>Получайте детальную информацию о SEO-состоянии любой страницы</p>
+                        </div>
+                        <div class="info-item">
+                            <h4>🌐 Работает везде</h4>
+                            <p>Букмарклеты работают на любых сайтах в любых современных браузерах</p>
+                        </div>
+                        <div class="info-item">
+                            <h4>🔒 Безопасность</h4>
+                            <p>Код выполняется локально, никаких данных не передается на внешние серверы</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Load header and footer
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load header
+            fetch('../components/header.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header-container').innerHTML = data;
+                });
+            
+            // Load footer
+            fetch('../components/footer.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer-container').innerHTML = data;
+                });
+        });
+    </script>
+
+    <style>
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 10px rgba(33, 150, 243, 0.3));
+        }
+
+        .page-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .tool-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Instructions */
+        .instructions-section {
+            margin-bottom: 3rem;
+        }
+
+        .instruction-card {
+            background: var(--gradient-dark);
+            border: 1px solid var(--blue-main);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .instruction-list {
+            list-style: none;
+            counter-reset: step-counter;
+            margin-top: 1rem;
+        }
+
+        .instruction-list li {
+            counter-increment: step-counter;
+            margin-bottom: 1rem;
+            padding-left: 3rem;
+            position: relative;
+            color: var(--text-secondary);
+        }
+
+        .instruction-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: var(--gradient-primary);
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* Bookmarklets Grid */
+        .bookmarklets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .bookmarklet-card {
+            background: var(--gradient-dark);
+            border: 1px solid var(--blue-main);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+        }
+
+        .bookmarklet-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-blue);
+            border-color: var(--blue-light);
+        }
+
+        .bookmarklet-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .bookmarklet-title {
+            color: var(--blue-light);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .bookmarklet-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .bookmarklet-link-container {
+            text-align: center;
+        }
+
+        .bookmarklet-link {
+            display: inline-block;
+            background: var(--gradient-primary);
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: move;
+        }
+
+        .bookmarklet-link:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: var(--shadow-blue);
+        }
+
+        /* Additional Info */
+        .additional-info {
+            margin-top: 4rem;
+        }
+
+        .info-card {
+            background: var(--gradient-dark);
+            border: 1px solid var(--blue-soft);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .info-item h4 {
+            color: var(--blue-light);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .info-item p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .bookmarklets-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .instruction-list li {
+                padding-left: 2.5rem;
+            }
+
+            .instruction-list li::before {
+                width: 1.5rem;
+                height: 1.5rem;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</body>
+</html>

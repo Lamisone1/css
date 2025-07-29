@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор мета-тегов - SEO Tools Bag</title>
+    <meta name="description" content="Создавайте оптимизированные мета-теги для SEO: title, description, keywords, Open Graph, Twitter Cards и другие важные теги.">
+    <meta name="keywords" content="генератор мета-тегов, SEO теги, title, description, Open Graph, Twitter Cards">
+    <link rel="canonical" href="https://seotoolsbag.com/meta-generator">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Генератор мета-тегов - SEO Tools Bag">
+    <meta property="og:description" content="Создавайте оптимизированные мета-теги для SEO: title, description, keywords, Open Graph, Twitter Cards и другие важные теги.">
+    <meta property="og:url" content="https://seotoolsbag.com/meta-generator">
+    <meta property="og:type" content="website">
+    
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-container"></div>
+
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumbs">
+        <ol class="breadcrumb-list">
+            <li class="breadcrumb-item">
+                <a href="/" class="breadcrumb-link">Главная</a>
+            </li>
+            <li class="breadcrumb-item">
+                <span class="breadcrumb-current">Генератор мета-тегов</span>
+            </li>
+        </ol>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">
+                🏷️ <span class="text-blue">Генератор</span> <span class="text-blue-light">мета-тегов</span>
+            </h1>
+            <p class="page-description">
+                Создавайте оптимизированные мета-теги для SEO. Генератор поможет создать правильные title, description, Open Graph, Twitter Cards и другие важные теги.
+            </p>
+        </div>
+
+        <div class="tool-container">
+            <!-- Input Form -->
+            <div class="input-section">
+                <div class="form-grid">
+                    <!-- Basic Meta Tags -->
+                    <div class="form-section">
+                        <h3 class="section-title text-blue-light">📄 Основные мета-теги</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Title (заголовок страницы)</label>
+                            <input type="text" id="pageTitle" class="form-input" placeholder="Введите заголовок страницы" maxlength="60">
+                            <div class="char-counter">
+                                <span id="titleCounter">0</span>/60 символов
+                                <span class="recommendation" id="titleRec"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Description (описание страницы)</label>
+                            <textarea id="pageDescription" class="form-textarea" placeholder="Введите описание страницы" maxlength="160" rows="3"></textarea>
+                            <div class="char-counter">
+                                <span id="descCounter">0</span>/160 символов
+                                <span class="recommendation" id="descRec"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Keywords (ключевые слова)</label>
+                            <input type="text" id="pageKeywords" class="form-input" placeholder="ключевое слово, фраза, термин">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">URL страницы</label>
+                            <input type="url" id="pageUrl" class="form-input" placeholder="https://example.com/page">
+                        </div>
+                    </div>
+
+                    <!-- Open Graph -->
+                    <div class="form-section">
+                        <h3 class="section-title text-blue-light">📱 Open Graph (Facebook)</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label">OG Title</label>
+                            <input type="text" id="ogTitle" class="form-input" placeholder="Заголовок для социальных сетей">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">OG Description</label>
+                            <textarea id="ogDescription" class="form-textarea" placeholder="Описание для социальных сетей" rows="2"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">OG Image URL</label>
+                            <input type="url" id="ogImage" class="form-input" placeholder="https://example.com/image.jpg">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">OG Type</label>
+                            <select id="ogType" class="form-select">
+                                <option value="website">Website</option>
+                                <option value="article">Article</option>
+                                <option value="product">Product</option>
+                                <option value="profile">Profile</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Site Name</label>
+                            <input type="text" id="siteName" class="form-input" placeholder="Название сайта">
+                        </div>
+                    </div>
+
+                    <!-- Twitter Cards -->
+                    <div class="form-section">
+                        <h3 class="section-title text-blue-light">🐦 Twitter Cards</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Twitter Card Type</label>
+                            <select id="twitterCard" class="form-select">
+                                <option value="summary">Summary</option>
+                                <option value="summary_large_image">Summary Large Image</option>
+                                <option value="app">App</option>
+                                <option value="player">Player</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Twitter Title</label>
+                            <input type="text" id="twitterTitle" class="form-input" placeholder="Заголовок для Twitter">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Twitter Description</label>
+                            <textarea id="twitterDescription" class="form-textarea" placeholder="Описание для Twitter" rows="2"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Twitter Image</label>
+                            <input type="url" id="twitterImage" class="form-input" placeholder="https://example.com/twitter-image.jpg">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Twitter Site</label>
+                            <input type="text" id="twitterSite" class="form-input" placeholder="@username">
+                        </div>
+                    </div>
+
+                    <!-- Additional Meta -->
+                    <div class="form-section">
+                        <h3 class="section-title text-blue-light">⚙️ Дополнительные теги</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Author (автор)</label>
+                            <input type="text" id="pageAuthor" class="form-input" placeholder="Имя автора">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Robots</label>
+                            <select id="robotsTag" class="form-select">
+                                <option value="index, follow">Index, Follow</option>
+                                <option value="noindex, follow">NoIndex, Follow</option>
+                                <option value="index, nofollow">Index, NoFollow</option>
+                                <option value="noindex, nofollow">NoIndex, NoFollow</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Language</label>
+                            <select id="pageLang" class="form-select">
+                                <option value="ru">Русский (ru)</option>
+                                <option value="en">English (en)</option>
+                                <option value="de">Deutsch (de)</option>
+                                <option value="fr">Français (fr)</option>
+                                <option value="es">Español (es)</option>
+                            </select>
+                        </div>
+
+                        <div class="checkbox-group">
+                            <label class="checkbox-option">
+                                <input type="checkbox" id="includeViewport">
+                                <span class="checkbox-custom"></span>
+                                <span class="checkbox-label">Включить viewport</span>
+                            </label>
+                            
+                            <label class="checkbox-option">
+                                <input type="checkbox" id="includeCanonical">
+                                <span class="checkbox-custom"></span>
+                                <span class="checkbox-label">Включить canonical</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <button id="generateBtn" class="btn btn-primary">🏷️ Генерировать теги</button>
+                    <button id="clearBtn" class="btn btn-secondary">🗑️ Очистить</button>
+                    <button id="fillSampleBtn" class="btn btn-secondary">📄 Пример</button>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <div class="results-header">
+                    <h3 class="section-title text-blue-soft">Сгенерированные мета-теги</h3>
+                    <div class="export-controls">
+                        <button id="copyCode" class="btn btn-primary">📋 Копировать код</button>
+                        <button id="downloadHTML" class="btn btn-secondary">💾 Скачать HTML</button>
+                    </div>
+                </div>
+                
+                <div class="code-container">
+                    <pre id="generatedCode" class="code-block"></pre>
+                </div>
+
+                <!-- Preview -->
+                <div class="preview-section">
+                    <h4 class="text-blue-light">👁️ Предварительный просмотр</h4>
+                    <div class="preview-grid">
+                        <div class="preview-card">
+                            <h5>🔍 Поисковая выдача</h5>
+                            <div class="search-preview">
+                                <div class="search-title" id="searchTitle">Заголовок страницы</div>
+                                <div class="search-url" id="searchUrl">https://example.com</div>
+                                <div class="search-description" id="searchDescription">Описание страницы появится здесь</div>
+                            </div>
+                        </div>
+
+                        <div class="preview-card">
+                            <h5>📱 Facebook</h5>
+                            <div class="social-preview facebook-preview">
+                                <div class="social-image" id="fbImage">🖼️</div>
+                                <div class="social-content">
+                                    <div class="social-title" id="fbTitle">Заголовок</div>
+                                    <div class="social-description" id="fbDescription">Описание</div>
+                                    <div class="social-url" id="fbUrl">example.com</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="preview-card">
+                            <h5>🐦 Twitter</h5>
+                            <div class="social-preview twitter-preview">
+                                <div class="social-image" id="twitterImagePreview">🖼️</div>
+                                <div class="social-content">
+                                    <div class="social-title" id="twitterTitlePreview">Заголовок</div>
+                                    <div class="social-description" id="twitterDescPreview">Описание</div>
+                                    <div class="social-url" id="twitterUrlPreview">example.com</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <script src="../js/main.js"></script>
+    <script>
+        class MetaGeneratorPage {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.loadComponents();
+                this.setupEventListeners();
+            }
+
+            loadComponents() {
+                // Load header
+                fetch('../components/header.html')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('header-container').innerHTML = data;
+                    });
+                
+                // Load footer
+                fetch('../components/footer.html')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('footer-container').innerHTML = data;
+                    });
+            }
+
+            setupEventListeners() {
+                document.getElementById('generateBtn').addEventListener('click', () => this.generateMetaTags());
+                document.getElementById('clearBtn').addEventListener('click', () => this.clearForm());
+                document.getElementById('fillSampleBtn').addEventListener('click', () => this.fillSample());
+                document.getElementById('copyCode').addEventListener('click', () => this.copyCode());
+                document.getElementById('downloadHTML').addEventListener('click', () => this.downloadHTML());
+
+                // Character counters
+                document.getElementById('pageTitle').addEventListener('input', () => this.updateCounter('pageTitle', 'titleCounter', 'titleRec', 60));
+                document.getElementById('pageDescription').addEventListener('input', () => this.updateCounter('pageDescription', 'descCounter', 'descRec', 160));
+
+                // Auto-fill functionality
+                document.getElementById('pageTitle').addEventListener('input', () => this.autoFillFields());
+                document.getElementById('pageDescription').addEventListener('input', () => this.autoFillFields());
+                document.getElementById('pageUrl').addEventListener('input', () => this.autoFillFields());
+            }
+
+            updateCounter(inputId, counterId, recId, maxLength) {
+                const input = document.getElementById(inputId);
+                const counter = document.getElementById(counterId);
+                const rec = document.getElementById(recId);
+                const length = input.value.length;
+                
+                counter.textContent = length;
+                
+                if (length === 0) {
+                    rec.textContent = '';
+                    rec.className = 'recommendation';
+                } else if (length < maxLength * 0.5) {
+                    rec.textContent = 'Слишком короткий';
+                    rec.className = 'recommendation warning';
+                } else if (length > maxLength * 0.9) {
+                    rec.textContent = 'Близко к лимиту';
+                    rec.className = 'recommendation warning';
+                } else {
+                    rec.textContent = 'Оптимальная длина';
+                    rec.className = 'recommendation success';
+                }
+            }
+
+            autoFillFields() {
+                const title = document.getElementById('pageTitle').value;
+                const description = document.getElementById('pageDescription').value;
+                const url = document.getElementById('pageUrl').value;
+
+                // Auto-fill OG fields if empty
+                if (title && !document.getElementById('ogTitle').value) {
+                    document.getElementById('ogTitle').value = title;
+                }
+                if (description && !document.getElementById('ogDescription').value) {
+                    document.getElementById('ogDescription').value = description;
+                }
+
+                // Auto-fill Twitter fields if empty
+                if (title && !document.getElementById('twitterTitle').value) {
+                    document.getElementById('twitterTitle').value = title;
+                }
+                if (description && !document.getElementById('twitterDescription').value) {
+                    document.getElementById('twitterDescription').value = description;
+                }
+            }
+
+            generateMetaTags() {
+                const data = this.collectFormData();
+                const metaTags = this.buildMetaTags(data);
+                
+                document.getElementById('generatedCode').textContent = metaTags;
+                document.getElementById('resultsSection').style.display = 'block';
+                
+                this.updatePreviews(data);
+                
+                document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+                Utils.showNotification('Мета-теги сгенерированы!', 'success');
+            }
+
+            collectFormData() {
+                return {
+                    title: document.getElementById('pageTitle').value,
+                    description: document.getElementById('pageDescription').value,
+                    keywords: document.getElementById('pageKeywords').value,
+                    url: document.getElementById('pageUrl').value,
+                    ogTitle: document.getElementById('ogTitle').value,
+                    ogDescription: document.getElementById('ogDescription').value,
+                    ogImage: document.getElementById('ogImage').value,
+                    ogType: document.getElementById('ogType').value,
+                    siteName: document.getElementById('siteName').value,
+                    twitterCard: document.getElementById('twitterCard').value,
+                    twitterTitle: document.getElementById('twitterTitle').value,
+                    twitterDescription: document.getElementById('twitterDescription').value,
+                    twitterImage: document.getElementById('twitterImage').value,
+                    twitterSite: document.getElementById('twitterSite').value,
+                    author: document.getElementById('pageAuthor').value,
+                    robots: document.getElementById('robotsTag').value,
+                    lang: document.getElementById('pageLang').value,
+                    includeViewport: document.getElementById('includeViewport').checked,
+                    includeCanonical: document.getElementById('includeCanonical').checked
+                };
+            }
+
+            buildMetaTags(data) {
+                let html = '<!-- Основные мета-теги -->\n';
+                
+                if (data.title) {
+                    html += `<title>${data.title}</title>\n`;
+                }
+                
+                if (data.description) {
+                    html += `<meta name="description" content="${data.description}">\n`;
+                }
+                
+                if (data.keywords) {
+                    html += `<meta name="keywords" content="${data.keywords}">\n`;
+                }
+                
+                if (data.author) {
+                    html += `<meta name="author" content="${data.author}">\n`;
+                }
+                
+                html += `<meta name="robots" content="${data.robots}">\n`;
+                
+                if (data.includeViewport) {
+                    html += '<meta name="viewport" content="width=device-width, initial-scale=1.0">\n';
+                }
+                
+                if (data.includeCanonical && data.url) {
+                    html += `<link rel="canonical" href="${data.url}">\n`;
+                }
+                
+                // Open Graph
+                if (data.ogTitle || data.ogDescription || data.ogImage) {
+                    html += '\n<!-- Open Graph / Facebook -->\n';
+                    html += `<meta property="og:type" content="${data.ogType}">\n`;
+                    
+                    if (data.url) {
+                        html += `<meta property="og:url" content="${data.url}">\n`;
+                    }
+                    
+                    if (data.ogTitle) {
+                        html += `<meta property="og:title" content="${data.ogTitle}">\n`;
+                    }
+                    
+                    if (data.ogDescription) {
+                        html += `<meta property="og:description" content="${data.ogDescription}">\n`;
+                    }
+                    
+                    if (data.ogImage) {
+                        html += `<meta property="og:image" content="${data.ogImage}">\n`;
+                    }
+                    
+                    if (data.siteName) {
+                        html += `<meta property="og:site_name" content="${data.siteName}">\n`;
+                    }
+                }
+                
+                // Twitter
+                if (data.twitterTitle || data.twitterDescription || data.twitterImage) {
+                    html += '\n<!-- Twitter -->\n';
+                    html += `<meta property="twitter:card" content="${data.twitterCard}">\n`;
+                    
+                    if (data.url) {
+                        html += `<meta property="twitter:url" content="${data.url}">\n`;
+                    }
+                    
+                    if (data.twitterTitle) {
+                        html += `<meta property="twitter:title" content="${data.twitterTitle}">\n`;
+                    }
+                    
+                    if (data.twitterDescription) {
+                        html += `<meta property="twitter:description" content="${data.twitterDescription}">\n`;
+                    }
+                    
+                    if (data.twitterImage) {
+                        html += `<meta property="twitter:image" content="${data.twitterImage}">\n`;
+                    }
+                    
+                    if (data.twitterSite) {
+                        html += `<meta property="twitter:site" content="${data.twitterSite}">\n`;
+                    }
+                }
+                
+                return html;
+            }
+
+            updatePreviews(data) {
+                // Search preview
+                document.getElementById('searchTitle').textContent = data.title || 'Заголовок страницы';
+                document.getElementById('searchUrl').textContent = data.url || 'https://example.com';
+                document.getElementById('searchDescription').textContent = data.description || 'Описание страницы появится здесь';
+
+                // Facebook preview
+                document.getElementById('fbTitle').textContent = data.ogTitle || data.title || 'Заголовок';
+                document.getElementById('fbDescription').textContent = data.ogDescription || data.description || 'Описание';
+                document.getElementById('fbUrl').textContent = data.url ? new URL(data.url).hostname : 'example.com';
+
+                // Twitter preview
+                document.getElementById('twitterTitlePreview').textContent = data.twitterTitle || data.title || 'Заголовок';
+                document.getElementById('twitterDescPreview').textContent = data.twitterDescription || data.description || 'Описание';
+                document.getElementById('twitterUrlPreview').textContent = data.url ? new URL(data.url).hostname : 'example.com';
+            }
+
+            fillSample() {
+                document.getElementById('pageTitle').value = 'Лучшие SEO инструменты для оптимизации сайта';
+                document.getElementById('pageDescription').value = 'Комплексный набор профессиональных SEO инструментов для анализа и оптимизации веб-сайтов. Бесплатные онлайн инструменты для SEO специалистов.';
+                document.getElementById('pageKeywords').value = 'SEO инструменты, оптимизация сайта, анализ сайта, SEO анализ';
+                document.getElementById('pageUrl').value = 'https://seotoolsbag.com/';
+                document.getElementById('siteName').value = 'SEO Tools Bag';
+                document.getElementById('pageAuthor').value = 'SEO Tools Bag';
+                document.getElementById('twitterSite').value = '@seotoolsbag';
+                document.getElementById('includeViewport').checked = true;
+                document.getElementById('includeCanonical').checked = true;
+
+                this.autoFillFields();
+                this.updateCounter('pageTitle', 'titleCounter', 'titleRec', 60);
+                this.updateCounter('pageDescription', 'descCounter', 'descRec', 160);
+
+                Utils.showNotification('Пример данных загружен', 'success');
+            }
+
+            clearForm() {
+                document.querySelectorAll('.form-input, .form-textarea, .form-select').forEach(field => {
+                    field.value = '';
+                });
+                document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                document.getElementById('resultsSection').style.display = 'none';
+                
+                // Reset counters
+                document.getElementById('titleCounter').textContent = '0';
+                document.getElementById('descCounter').textContent = '0';
+                document.querySelectorAll('.recommendation').forEach(rec => {
+                    rec.textContent = '';
+                    rec.className = 'recommendation';
+                });
+
+                Utils.showNotification('Форма очищена', 'success');
+            }
+
+            copyCode() {
+                const code = document.getElementById('generatedCode').textContent;
+                Utils.copyToClipboard(code);
+            }
+
+            downloadHTML() {
+                const code = document.getElementById('generatedCode').textContent;
+                const blob = new Blob([code], { type: 'text/html;charset=utf-8;' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'meta-tags.html';
+                link.click();
+                
+                Utils.showNotification('HTML файл скачан', 'success');
+            }
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            new MetaGeneratorPage();
+        });
+    </script>
+
+    <style>
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 10px rgba(33, 150, 243, 0.3));
+        }
+
+        .page-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .tool-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Form Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-section {
+            background: var(--gradient-dark);
+            border: 1px solid var(--blue-main);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 5px rgba(100, 181, 246, 0.3));
+        }
+
+        .char-counter {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .recommendation {
+            font-size: 0.8rem;
+        }
+
+        .recommendation.success {
+            color: var(--blue-soft);
+        }
+
+        .recommendation.warning {
+            color: #ff9800;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+
+        .checkbox-option:hover {
+            background: rgba(33, 150, 243, 0.1);
+        }
+
+        .checkbox-custom {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--blue-main);
+            border-radius: 4px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .checkbox-custom::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--blue-main);
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        input[type="checkbox"]:checked + .checkbox-custom::after {
+            opacity: 1;
+        }
+
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        .checkbox-label {
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Results */
+        .results-section {
+            margin-top: 3rem;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .export-controls {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .code-container {
+            background: var(--secondary-bg);
+            border: 1px solid var(--blue-main);
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .code-block {
+            padding: 1.5rem;
+            margin: 0;
+            background: transparent;
+            color: var(--text-primary);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        /* Preview */
+        .preview-section {
+            margin-top: 2rem;
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .preview-card {
+            background: var(--gradient-dark);
+            border: 1px solid var(--blue-soft);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .preview-card h5 {
+            color: var(--blue-light);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .search-preview {
+            font-family: arial, sans-serif;
+        }
+
+        .search-title {
+            color: #1a0dab;
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+            cursor: pointer;
+        }
+
+        .search-url {
+            color: #006621;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .search-description {
+            color: #4d5156;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .social-preview {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+            color: #333;
+        }
+
+        .social-image {
+            background: #f0f0f0;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #999;
+        }
+
+        .social-content {
+            padding: 1rem;
+        }
+
+        .social-title {
+            font-weight: bold;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .social-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .social-url {
+            font-size: 0.8rem;
+            color: #999;
+            text-transform: uppercase;
+        }
+
+        .facebook-preview {
+            border-color: #1877f2;
+        }
+
+        .twitter-preview {
+            border-color: #1da1f2;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .results-header {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+
+            .export-controls {
+                justify-content: center;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .preview-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</body>
+</html>

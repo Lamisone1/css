@@ -1,0 +1,27 @@
+User-agent: *
+Allow: /
+
+# Основные страницы
+Allow: /phrase-combiner
+Allow: /text-analyzer
+Allow: /link-analyzer
+Allow: /domain-extractor
+Allow: /bookmarklets
+Allow: /top-analyzer
+Allow: /query-clustering
+
+# Статические ресурсы
+Allow: /css/
+Allow: /js/
+Allow: /images/
+
+# Запретить индексацию служебных файлов
+Disallow: /components/
+Disallow: /.htaccess
+Disallow: /robots.txt
+
+# Sitemap
+Sitemap: https://seotoolsbag.com/sitemap.xml
+
+# Время задержки между запросами (в секундах)
+Crawl-delay: 1

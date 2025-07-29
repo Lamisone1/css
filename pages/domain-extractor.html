@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Извлечение доменов - SEO Tools Bag</title>
+    <meta name="description" content="Извлекайте чистые домены из списка URL или оставляйте домены с протоколом https://. Массовая обработка ссылок.">
+    <meta name="keywords" content="извлечение доменов, парсинг URL, очистка доменов, массовая обработка ссылок, домены из URL">
+    <link rel="canonical" href="https://seotoolsbag.com/domain-extractor">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Извлечение доменов - SEO Tools Bag">
+    <meta property="og:description" content="Извлекайте чистые домены из списка URL или оставляйте домены с протоколом https://. Массовая обработка ссылок.">
+    <meta property="og:url" content="https://seotoolsbag.com/domain-extractor">
+    <meta property="og:type" content="website">
+    
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-container"></div>
+
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumbs">
+        <ol class="breadcrumb-list">
+            <li class="breadcrumb-item">
+                <a href="/" class="breadcrumb-link">Главная</a>
+            </li>
+            <li class="breadcrumb-item">
+                <span class="breadcrumb-current">Извлечение доменов</span>
+            </li>
+        </ol>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">
+                🌐 <span class="text-neon">Извлечение</span> <span class="text-pink">доменов</span>
+            </h1>
+            <p class="page-description">
+                Извлекайте чистые домены из списка URL или оставляйте домены с протоколом https://. Поддерживается массовая обработка ссылок.
+            </p>
+        </div>
+
+        <div class="tool-container">
+            <!-- Input Section -->
+            <div class="input-section">
+                <div class="form-group">
+                    <label class="form-label">Введите список URL-адресов</label>
+                    <textarea 
+                        id="urlInput" 
+                        class="form-textarea" 
+                        placeholder="Вставьте список URL-адресов, каждый с новой строки:&#10;https://example.com/page&#10;http://another-site.org/path&#10;www.site.com&#10;domain.net/file.html"
+                        rows="12"
+                    ></textarea>
+                </div>
+                
+                <div class="options-section">
+                    <div class="option-group">
+                        <label class="form-label">Формат вывода</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="outputFormat" value="clean" checked>
+                                <span class="radio-custom"></span>
+                                <span class="radio-label">Чистые домены (example.com)</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="outputFormat" value="https">
+                                <span class="radio-custom"></span>
+                                <span class="radio-label">С протоколом HTTPS (https://example.com)</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="option-group">
+                        <label class="checkbox-option">
+                            <input type="checkbox" id="removeDuplicates" checked>
+                            <span class="checkbox-custom"></span>
+                            <span class="checkbox-label">Удалять дубликаты</span>
+                        </label>
+                        
+                        <label class="checkbox-option">
+                            <input type="checkbox" id="removeWww" checked>
+                            <span class="checkbox-custom"></span>
+                            <span class="checkbox-label">Удалять www</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button id="extractBtn" class="btn btn-primary">🌐 Извлечь домены</button>
+                    <button id="clearBtn" class="btn btn-secondary">🗑️ Очистить</button>
+                    <button id="loadSample" class="btn btn-secondary">📄 Загрузить пример</button>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <div class="results-header">
+                    <h3 class="section-title text-green">Извлеченные домены</h3>
+                    <div class="results-stats">
+                        <span class="stat">Найдено доменов: <span id="totalDomains" class="text-neon">0</span></span>
+                        <span class="stat">Уникальных: <span id="uniqueDomains" class="text-pink">0</span></span>
+                    </div>
+                </div>
+                
+                <div class="export-controls">
+                    <button id="copyResults" class="btn btn-primary">📋 Копировать результат</button>
+                    <button id="exportCSV" class="btn btn-primary">📄 Экспорт CSV</button>
+                    <button id="exportTXT" class="btn btn-secondary">📝 Экспорт TXT</button>
+                </div>
+                
+                <div class="results-container">
+                    <div class="results-display" id="resultsDisplay">
+                        <!-- Results will be displayed here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bulk Processing Section -->
+            <div class="bulk-section">
+                <h3 class="section-title text-pink">Дополнительные возможности</h3>
+                <div class="bulk-grid">
+                    <div class="bulk-card">
+                        <div class="bulk-icon text-neon">🔄</div>
+                        <h4>Массовая обработка</h4>
+                        <p>Обрабатывайте тысячи URL одновременно. Инструмент автоматически определит и извлечет все домены.</p>
+                    </div>
+                    
+                    <div class="bulk-card">
+                        <div class="bulk-icon text-pink">🧹</div>
+                        <h4>Очистка данных</h4>
+                        <p>Автоматическое удаление дубликатов, www-префиксов и некорректных URL-адресов.</p>
+                    </div>
+                    
+                    <div class="bulk-card">
+                        <div class="bulk-icon text-green">📊</div>
+                        <h4>Форматы экспорта</h4>
+                        <p>Экспорт результатов в различных форматах: CSV для таблиц, TXT для списков.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <script src="../js/main.js"></script>
+    <script>
+        class DomainExtractorPage {
+            constructor() {
+                this.currentResults = [];
+                this.init();
+            }
+
+            init() {
+                this.loadComponents();
+                this.setupEventListeners();
+            }
+
+            loadComponents() {
+                // Load header
+                fetch('../components/header.html')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('header-container').innerHTML = data;
+                    });
+                
+                // Load footer
+                fetch('../components/footer.html')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('footer-container').innerHTML = data;
+                    });
+            }
+
+            setupEventListeners() {
+                document.getElementById('extractBtn').addEventListener('click', () => this.extractDomains());
+                document.getElementById('clearBtn').addEventListener('click', () => this.clearInput());
+                document.getElementById('loadSample').addEventListener('click', () => this.loadSampleUrls());
+                document.getElementById('copyResults').addEventListener('click', () => this.copyResults());
+                document.getElementById('exportCSV').addEventListener('click', () => this.exportCSV());
+                document.getElementById('exportTXT').addEventListener('click', () => this.exportTXT());
+
+                // Real-time processing on input
+                const urlInput = document.getElementById('urlInput');
+                urlInput.addEventListener('input', Utils.debounce(() => {
+                    if (urlInput.value.trim().length > 0) {
+                        this.extractDomains();
+                    }
+                }, 500));
+            }
+
+            extractDomains() {
+                const urlInput = document.getElementById('urlInput');
+                const urls = urlInput.value.trim();
+
+                if (!urls) {
+                    Utils.showNotification('Введите список URL для обработки', 'error');
+                    return;
+                }
+
+                const outputFormat = document.querySelector('input[name="outputFormat"]:checked').value;
+                const removeDuplicates = document.getElementById('removeDuplicates').checked;
+                const removeWww = document.getElementById('removeWww').checked;
+                const includeProtocol = outputFormat === 'https';
+
+                try {
+                    // Extract domains using LinkAnalyzer
+                    let domains = LinkAnalyzer.extractDomains(urls, includeProtocol);
+
+                    // Remove www if option is checked
+                    if (removeWww && !includeProtocol) {
+                        domains = domains.map(domain => domain.replace(/^www\./, ''));
+                    }
+
+                    // Remove duplicates if option is checked
+                    if (removeDuplicates) {
+                        domains = [...new Set(domains)];
+                    }
+
+                    // Sort domains alphabetically
+                    domains.sort();
+
+                    this.currentResults = domains;
+                    this.displayResults();
+
+                    Utils.showNotification(`Извлечено ${domains.length} доменов`, 'success');
+                } catch (error) {
+                    Utils.showNotification('Ошибка при извлечении доменов', 'error');
+                    console.error(error);
+                }
+            }
+
+            displayResults() {
+                const resultsSection = document.getElementById('resultsSection');
+                const resultsDisplay = document.getElementById('resultsDisplay');
+                const totalDomains = document.getElementById('totalDomains');
+                const uniqueDomains = document.getElementById('uniqueDomains');
+
+                const uniqueCount = new Set(this.currentResults).size;
+                
+                totalDomains.textContent = Utils.formatNumber(this.currentResults.length);
+                uniqueDomains.textContent = Utils.formatNumber(uniqueCount);
+
+                if (this.currentResults.length === 0) {
+                    resultsDisplay.innerHTML = '<p class="no-data">Домены не найдены</p>';
+                    resultsSection.style.display = 'block';
+                    return;
+                }
+
+                let html = '<div class="domains-list">';
+                this.currentResults.forEach((domain, index) => {
+                    html += `
+                        <div class="domain-result-item">
+                            <span class="domain-number">${index + 1}.</span>
+                            <span class="domain-text">${domain}</span>
+                            <button class="domain-copy-btn" onclick="domainExtractor.copyDomain('${domain}')">📋</button>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+
+                resultsDisplay.innerHTML = html;
+                resultsSection.style.display = 'block';
+                resultsSection.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            copyDomain(domain) {
+                Utils.copyToClipboard(domain);
+            }
+
+            loadSampleUrls() {
+                const sampleUrls = `https://example.com/page/about
+http://test-site.org/products
+www.sample-domain.net
+https://another-example.com/blog/post-1
+http://old-site.ru/index.html
+https://sub.domain.com/path/file.html
+www.ecommerce-site.org/shop
+https://news-portal.net/articles
+http://company-website.com/services
+https://personal-blog.info/posts
+www.online-store.biz/catalog
+https://tech-startup.io/about-us
+http://local-business.com/contact
+https://creative-agency.design/portfolio
+www.educational-site.edu/courses
+https://health-clinic.med/doctors
+http://restaurant-chain.food/menu
+https://travel-agency.travel/destinations
+www.fitness-center.gym/classes
+https://music-platform.audio/playlists`;
+
+                document.getElementById('urlInput').value = sampleUrls;
+                this.extractDomains();
+                Utils.showNotification('Загружен пример списка URL', 'success');
+            }
+
+            clearInput() {
+                document.getElementById('urlInput').value = '';
+                document.getElementById('resultsSection').style.display = 'none';
+                this.currentResults = [];
+                Utils.showNotification('Данные очищены', 'success');
+            }
+
+            copyResults() {
+                if (this.currentResults.length === 0) {
+                    Utils.showNotification('Нет данных для копирования', 'error');
+                    return;
+                }
+
+                const text = this.currentResults.join('\n');
+                Utils.copyToClipboard(text);
+            }
+
+            exportCSV() {
+                if (this.currentResults.length === 0) {
+                    Utils.showNotification('Нет данных для экспорта', 'error');
+                    return;
+                }
+
+                const data = this.currentResults.map((domain, index) => ({
+                    number: index + 1,
+                    domain: domain
+                }));
+
+                Utils.exportToCSV(data, 'extracted-domains.csv');
+            }
+
+            exportTXT() {
+                if (this.currentResults.length === 0) {
+                    Utils.showNotification('Нет данных для экспорта', 'error');
+                    return;
+                }
+
+                const text = this.currentResults.join('\n');
+                const blob = new Blob([text], { type: 'text/plain;charset=utf-8;' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'extracted-domains.txt';
+                link.click();
+
+                Utils.showNotification('Файл TXT экспортирован', 'success');
+            }
+        }
+
+        // Initialize the page
+        let domainExtractor;
+        document.addEventListener('DOMContentLoaded', function() {
+            domainExtractor = new DomainExtractorPage();
+        });
+    </script>
+
+    <style>
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        .page-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .tool-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .input-section {
+            margin-bottom: 3rem;
+        }
+
+        /* Options Section */
+        .options-section {
+            background: var(--gradient-dark);
+            border: 1px solid var(--neon-blue);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .option-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .radio-option, .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+
+        .radio-option:hover, .checkbox-option:hover {
+            background: rgba(0, 255, 255, 0.1);
+        }
+
+        .radio-custom, .checkbox-custom {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--neon-blue);
+            border-radius: 50%;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .checkbox-custom {
+            border-radius: 4px;
+        }
+
+        .radio-custom::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            background: var(--neon-blue);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .checkbox-custom::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--neon-blue);
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        input[type="radio"]:checked + .radio-custom::after,
+        input[type="checkbox"]:checked + .checkbox-custom::after {
+            opacity: 1;
+        }
+
+        input[type="radio"], input[type="checkbox"] {
+            display: none;
+        }
+
+        .radio-label, .checkbox-label {
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Results Section */
+        .results-section {
+            margin-bottom: 3rem;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        .results-stats {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .export-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .results-container {
+            background: var(--gradient-dark);
+            border: 1px solid var(--neon-green);
+            border-radius: 8px;
+            padding: 1.5rem;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .domains-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .domain-result-item {
+            display: grid;
+            grid-template-columns: 50px 1fr auto;
+            gap: 1rem;
+            align-items: center;
+            padding: 0.8rem;
+            border-radius: 4px;
+            border: 1px solid rgba(0, 255, 128, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .domain-result-item:hover {
+            background: rgba(0, 255, 128, 0.1);
+            border-color: var(--neon-green);
+        }
+
+        .domain-number {
+            color: var(--neon-blue);
+            font-weight: bold;
+            font-family: monospace;
+            text-align: right;
+        }
+
+        .domain-text {
+            color: var(--text-primary);
+            font-weight: bold;
+            word-break: break-all;
+        }
+
+        .domain-copy-btn {
+            padding: 0.3rem 0.6rem;
+            background: var(--gradient-primary);
+            color: var(--text-primary);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .domain-copy-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Bulk Section */
+        .bulk-section {
+            margin-top: 4rem;
+        }
+
+        .bulk-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .bulk-card {
+            background: var(--gradient-dark);
+            border: 1px solid var(--neon-pink);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .bulk-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-pink);
+        }
+
+        .bulk-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .bulk-card h4 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .bulk-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .no-data {
+            text-align: center;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .options-section {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .results-header {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+
+            .results-stats {
+                justify-content: center;
+            }
+
+            .export-controls {
+                justify-content: center;
+            }
+
+            .domain-result-item {
+                grid-template-columns: 30px 1fr;
+                gap: 0.5rem;
+            }
+
+            .domain-copy-btn {
+                grid-column: 1 / -1;
+                margin-top: 0.5rem;
+                justify-self: center;
+                width: fit-content;
+            }
+
+            .controls {
+                justify-content: center;
+            }
+
+            .bulk-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</body>
+</html>
